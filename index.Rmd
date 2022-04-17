@@ -128,8 +128,6 @@ Bayesyen Veri Analizine Giriş
 [`r fontawesome::fa(name = "github")`](https://github.com/mdogucu/stats115-wi21-website)[`r fontawesome::fa(name = "link")`](https://www.stats115.com/)
 
 
----
-
 
 ---
 
