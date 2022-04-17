@@ -1,7 +1,7 @@
 ---
 title: "R (ile) Öğretme: Örnekler ve Kaynaklar"
 author: "Mine Dogucu"
-subtitle: "[bit.ly/dogucu-talks](https://bit.ly/dogucu-talks)"
+subtitle: "Why R Turkey konferansı, R eğitimi paneli <br>[bit.ly/dogucu-talks](https://bit.ly/dogucu-talks)"
 date: "2022-04-17"
 output:
   xaringan::moon_reader:
