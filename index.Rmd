@@ -235,83 +235,11 @@ prior - önsel model | (scaled) likelihood - ölçekli olabilirlik | posterior -
 ---
 
 
-```{r, echo=FALSE, message=FALSE, cache=TRUE, fig.alt="3 by 3 prior, scaled likelihood, and posterior plots. In the first column of the plots data (thus the likelihood changes)  from 6 successes out of 13 trials to 29 out of 63 and then to 46 out of 99. All the likelihood curves have a similar pi value when y reaches its maximum. As sample size increases the posterior is closer and closer to the likelihood. Each row represents a different prior model including Beta(14, 1), Beta(5,11) and Beta(1,1) respectively from least peaked (informative) to flat. As the prior gets more informative (peaked) the posterior is closer to prior."}
-## Code for facet_wrapped Beta-Binomial plots
-### Plotting function
-beta_binom_grid_plot <- function(data, likelihood = FALSE, posterior = FALSE){
-  g <- ggplot(data, aes(x = pi, y = prior)) + 
-    geom_line() + 
-    geom_area(alpha = 0.5, aes(fill = "prior", x = pi, y = prior)) + 
-    scale_fill_manual("", values = c(prior = "#f0e442", 
-      `(scaled) likelihood` = "#0071b2", posterior = "#009e74"), breaks = c("prior", "(scaled) likelihood", "posterior")) + 
-    labs(x = expression(pi), y = "density") + 
-    theme(legend.position="bottom")
-  
-  if(likelihood == TRUE){
-    g <- g + 
-      geom_line(aes(x = pi, y = likelihood)) + 
-      geom_area(alpha = 0.5, aes(fill = "(scaled) likelihood", x = pi, y = likelihood))
-  }
-  
-  if(posterior == TRUE){
-    g <- g + 
-      geom_line(aes(x = pi, y = posterior)) + 
-      geom_area(alpha = 0.5, aes(fill = "posterior", x = pi, y = posterior)) 
-  }
-  g
-}
-make_plot_data <- function(as, bs, xs, ns, labs_prior, labs_likelihood){
-  ### Set up data to call in plot
-  # Refinement parameter
-  size <- 250
-  
-  # Model settings
-  pi <- rep(seq(0,1,length=size), 9)
-  
-  # Prior parameters
-  a <- rep(as, each = size*3)
-  b <- rep(bs, each = size*3)
-  # Data
-  x <- rep(rep(xs, each = size), 3)
-  n <- rep(rep(ns, each = size), 3)
-  # Posterior parameters
-  a_post <- x + a
-  b_post <- n - x + b
-  # Labels
-  setting_prior      <- as.factor(rep(1:3, each = size*3))
-  setting_likelihood <- as.factor(rep(rep(1:3, each = size), 3))
-  levels(setting_prior)      <- labs_prior
-  levels(setting_likelihood) <- labs_likelihood    
-  # Prior, likelihood, posterior functions
-  bfun1 <- function(x){dbinom(x = xs[1], size = ns[1], prob = x)}
-  bfun2 <- function(x){dbinom(x = xs[2], size = ns[2], prob = x)}
-  bfun3 <- function(x){dbinom(x = xs[3], size = ns[3], prob = x)}
-  scale   <- rep(rep(c(integrate(bfun1, 0, 1)[[1]], integrate(bfun2, 0, 1)[[1]], integrate(bfun3, 0, 1)[[1]]), each = size), 3)
-  prior      <- dbeta(x = pi, shape1 = a, shape2 = b)
-  likelihood <- dbinom(x = x, size = n, prob = pi) / scale
-  posterior  <- dbeta(x = pi, shape1 = a_post, shape2 = b_post)
-  # Combine into data frame
-  data.frame(setting_prior, setting_likelihood, pi, a, b, x, n, likelihood, prior, posterior)
-}
-plot_dat <- make_plot_data(
-  as = c(5,1,14), bs = c(11,1,1), 
-  xs = c(6,29,46), ns = c(13,63,99), 
-  labs_prior = c("prior: Beta(5,11)", "prior: Beta(1,1)", "prior: Beta(14,1)"), 
-  labs_likelihood = c("data: Y = 6 of n = 13", "data: Y = 29 of n = 63", "data: Y = 46 of n = 99"))
+class: middle
+
+```{r echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics("img/combined.png")
 ```
-
-
-```{r echo = FALSE, fig.align='center', cache=TRUE}
-plot_dat_new <- plot_dat %>% 
-  mutate(setting_prior = factor(setting_prior, 
-                                levels = c("prior: Beta(14,1)", "prior: Beta(5,11)", "prior: Beta(1,1)")))
-beta_binom_grid_plot(plot_dat_new, posterior = TRUE, likelihood = TRUE) + 
-  facet_grid(setting_prior ~ setting_likelihood) +
-  theme(text = element_text(size=17)) 
-```
-
-
-
 
 
 
