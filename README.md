@@ -1,4 +1,4 @@
-# R (ile) öğretme
+# R (ile) Öğretme: Örnekler, Kaynaklar ve Tavsiyeler
 
 <hr style="border:2px solid gray"> </hr>
 
