@@ -60,7 +60,7 @@ knitr::include_graphics("img/uc-map.png")
 
 class: middle 
 
-## İstatistik ve Veri Bilimi Eğitimcilerinin Teknolojik Araç Kullanımı Örneği
+## İstatistik ve Veri Bilimi Eğitimcilerinin/Akademisyenlerinin Teknolojik Araç Kullanımı Örneği
 
 - Araştırma: R
 
